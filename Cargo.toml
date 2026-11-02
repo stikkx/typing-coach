@@ -1,0 +1,17 @@
+[package]
+name = "typing_coach"
+version = "0.1.0"
+edition = "2024"
+description = "Playful terminal typing trainer for the German QWERTZ layout, from f/j to programming symbols"
+license = "MIT"
+repository = "https://github.com/stikkx/typing-coach"
+readme = "README.md"
+keywords = ["typing", "tutor", "qwertz", "tui"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+chrono = { version = "0.4.45", features = ["serde"] }
+dirs = "7.0.0"
+ratatui = "0.30.2"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"

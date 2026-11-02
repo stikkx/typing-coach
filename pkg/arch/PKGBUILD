@@ -1,0 +1,40 @@
+# Maintainer: Markus <markus at qwellcode dot de>
+pkgname=typing-coach
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Playful terminal typing trainer for the German QWERTZ layout, from f/j to programming symbols"
+arch=('x86_64' 'aarch64')
+url="https://github.com/stikkx/typing-coach"
+license=('MIT')
+depends=('gcc-libs' 'glibc')
+makedepends=('cargo')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('52e6681f0ffaac739ff67a2fac7d9d94d3d881dfd2cc01f7e3e6128a9f5acd0c')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo build --frozen --release
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+  cargo test --frozen --release
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  install -Dm755 target/release/typing_coach "$pkgdir/usr/bin/typing_coach"
+  ln -s typing_coach "$pkgdir/usr/bin/typing-coach"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

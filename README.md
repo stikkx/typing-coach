@@ -23,16 +23,31 @@ beginner on `f` and `j` to a fast typist, with an optional track for programming
 
 ## Install
 
-Requires Rust (edition 2024).
+### Arch Linux / Omarchy: prebuilt package (x86_64)
+
+Download `typing-coach-<version>-x86_64.pkg.tar.zst` from the
+[latest release](https://github.com/stikkx/typing-coach/releases/latest), then:
+
+```sh
+sudo pacman -U typing-coach-*-x86_64.pkg.tar.zst
+```
+
+### Arch Linux / Omarchy: build the package yourself
 
 ```sh
 git clone https://github.com/stikkx/typing-coach.git
-cd typing-coach
-cargo install --path .
-typing_coach
+cd typing-coach/pkg/arch
+makepkg -si
 ```
 
-Or run it straight from the source folder with `cargo run --release`.
+### Any system with Rust (edition 2024)
+
+```sh
+cargo install --git https://github.com/stikkx/typing-coach --tag v0.1.0
+```
+
+Then start it with `typing_coach` (the Arch package also installs it as `typing-coach`).
+To run it straight from a source checkout, use `cargo run --release`.
 
 Set your system keyboard layout to German (`de`). The app reads the characters your layout
 produces, so AltGr symbols like `{` work as usual.
